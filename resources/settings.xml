@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Setup">
+		<setting id="maxcount" type="text" default="25" />
+	</category>
+</settings>
