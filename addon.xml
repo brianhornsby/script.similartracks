@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.similartracks"
-       name="Similiar Tracks Script"
-       version="0.0.1"
+       name="Similar Tracks Script"
+       version="0.0.2"
        provider-name="Brian Hornsby">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="2.0"/>
   </requires>
   <extension point="xbmc.python.library"
              library="similartracks.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en"></summary>
-    <description lang="en"></description>
+    <description lang="en">Create a playlist based on tracks from your music library that are similar to the currently playing track. Uses the last.fm track.getSimilar api.</description>
     <platform>all</platform>
   </extension>
 </addon>
