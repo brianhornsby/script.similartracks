@@ -1,0 +1,8 @@
+*** 0.1.0 ***
+
+Changed to lyric script.
+Tidied up code.
+
+*** 0.0.1 ***
+
+Initial release.

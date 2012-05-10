@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.similartracks"
-       name="Similar Tracks Script"
-       version="0.0.2"
+       name="Similar Tracks"
+       version="0.1.0"
        provider-name="Brian Hornsby">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-  </requires>
-  <extension point="xbmc.python.library"
-             library="similartracks.py" />
-  <extension point="xbmc.addon.metadata">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.beautifulsoup" version="3.0.8"/>
+	</requires>
+	<extension point="xbmc.python.lyrics"
+             library="default.py" />
+	<extension point="xbmc.addon.metadata">
     <summary lang="en"></summary>
     <description lang="en">Create a playlist based on tracks from your music library that are similar to the currently playing track. Uses the last.fm track.getSimilar api.</description>
     <platform>all</platform>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>	
+	<!--Labels-->
+	<string id="1000">Similar Tracks</string>
+	
+	<!--Settings-->
+	<string id="2000">Maximum tracks to add to playlist</string>
+	
+	<!--Dialogs-->,
+	<string id="3000">Initializing script</string>
+	<string id="3001">Found %d matching tracks in music library</string>
+	<string id="3002">Creating playlist</string>
+	<string id="3003">Received %d similar tracks from last.fm</string>
+	<string id="3004">Creating playlist. Adding %s</string>
+	<string id="3005">Getting similar tracks for %s - %s</string>
+	<string id="3006">Unable to find any similar tracks for</string>
+
+	<!--Notifcations-->
+	<string id="4000"></string>
+	
+</strings>
