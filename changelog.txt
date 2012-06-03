@@ -1,3 +1,6 @@
+*** 0.2.0 ***
+Changed XBMC music library lookup to use json RPC.
+
 *** 0.1.0 ***
 
 Changed to lyric script.

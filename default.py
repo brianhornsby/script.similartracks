@@ -25,6 +25,11 @@ from urllib2 import urlopen
 from BeautifulSoup import BeautifulStoneSoup
 import resources.lib.xbmcsettings as xbmcsettings
 
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
+
 __addonid__  = 'script.similartracks'
 __settings__ = xbmcsettings.Settings(__addonid__, sys.argv)
 
@@ -72,18 +77,37 @@ def get_similar_tracks(artist, title):
 	lastfmtracks = get_lastfm_similar_tracks(artist, title)
 	pDialog.update(75, __settings__.get_string(3002), __settings__.get_string(3003) % (len(lastfmtracks)))
 	count = 0
+	no = 1
+	
+	json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": [], "sort": { "method": "label" } }, "id": 1}')
+	json_query = unicode(json_query, 'utf-8', errors='ignore')
+	json_response = simplejson.loads(json_query)
+	
+	artists = []
+	if (json_response['result'] != None) and (json_response['result'].has_key('artists')):
+		for artist in json_response['result']['artists']:
+			artists.append({'artist': artist['artist'], 'id': artist['artistid']})
+	
 	for track in lastfmtracks:
-		sql_music = "select distinct strTitle, strArtist, strFilename, strPath from songview where idSong = (select idSong from song where strTitle = \'%s\') and idArtist = (select idArtist from artist where strArtist = '%s')" % (track['title'].replace("'", "''").replace("%","%%"), track['artist'].replace("'", "''").replace("%", "%%"))
-		soup = BeautifulStoneSoup(xbmc.executehttpapi( "QueryMusicDatabase(%s)" % urllib.quote_plus(sql_music.encode('utf-8')), ))
-		if soup:
-			fields = soup.findAll('field')
-			if len(fields) == 4:
-				path = os.path.join(fields[3].string, fields[2].string)
-				if path != currenttrack and get_track_index_in_playlist(path) == 0:
-					track = {'title': fields[0].string, 'artist': fields[1].string, 'filename': path, 'added': False}
-					__playlisttracks__.append(track)
-					count = count + 1
-					pDialog.update(85, __settings__.get_string(3004) % fields[1].string, __settings__.get_string(3001) % count)
+		tracktitle = track['title'].encode('utf-8')
+		trackartist = track['artist'].encode('utf-8')
+		no = no + 1
+		artistid = None
+		for artist in artists:
+			if artist.has_key('artist') and artist['artist'] == trackartist:
+				artistid = artist['id']
+				break
+		if artistid:
+			json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist", "album", "track", "file"], "sort": { "method": "label" }, "artistid":%s }, "id": 1}' % artistid)
+			json_query = unicode(json_query, 'utf-8', errors='ignore')
+			json_response = simplejson.loads(json_query)
+			if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
+				for song in json_response['result']['songs']:
+					if song.has_key('title') and song['title'] == tracktitle:
+						print '%d) %s = %d' % (no, trackartist, artistid)
+						__playlisttracks__.append({'artist': trackartist, 'title': tracktitle, 'file': song['file'], 'added': False})
+						count = count + 1
+						pDialog.update(85, __settings__.get_string(3004) % ('%s - %s' % (trackartist, tracktitle)) , __settings__.get_string(3001) % count)
 	return count
 
 tag = xbmc.Player().getMusicInfoTag()
@@ -104,9 +128,9 @@ if xbmc.Player().isPlayingAudio():
 			i = get_next_track_to_add(previous_artist)
 			if i == -1:
 				break
-			previous_artist = __playlisttracks__[i]["artist"]
-			listitem = xbmcgui.ListItem(__playlisttracks__[i]["title"])
-			xbmc.PlayList(0).add(__playlisttracks__[i]["filename"], listitem)
+			previous_artist = __playlisttracks__[i]['artist']
+			listitem = xbmcgui.ListItem(__playlisttracks__[i]['title'])
+			xbmc.PlayList(0).add(__playlisttracks__[i]['file'], listitem)
 			__playlisttracks__[i]["added"] = True
 			index = index + 1
 	pDialog.close()
