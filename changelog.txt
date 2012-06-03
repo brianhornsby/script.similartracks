@@ -1,3 +1,6 @@
+*** 0.3.0 ***
+Left debugging statement in code.
+
 *** 0.2.0 ***
 Changed XBMC music library lookup to use json RPC.
 

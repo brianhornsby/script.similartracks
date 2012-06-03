@@ -104,7 +104,6 @@ def get_similar_tracks(artist, title):
 			if (json_response['result'] != None) and (json_response['result'].has_key('songs')):
 				for song in json_response['result']['songs']:
 					if song.has_key('title') and song['title'] == tracktitle:
-						print '%d) %s = %d' % (no, trackartist, artistid)
 						__playlisttracks__.append({'artist': trackartist, 'title': tracktitle, 'file': song['file'], 'added': False})
 						count = count + 1
 						pDialog.update(85, __settings__.get_string(3004) % ('%s - %s' % (trackartist, tracktitle)) , __settings__.get_string(3001) % count)
