@@ -63,7 +63,7 @@ def get_track_index_in_playlist(filename):
 
 def get_lastfm_similar_tracks(artist, track):
 	base_url = 'http://ws.audioscrobbler.com/2.0/?'
-	params = {'method': 'track.getsimilar', 'artist': artist, 'track': track, 'api_key': 'b25b959554ed76058ac220b7b2e0a026'}
+	params = {'method': 'track.getsimilar', 'artist': artist, 'track': track, 'api_key': '5da513b631898f5372a5e5f863651212'}
 	url = '%s%s' % (base_url, urllib.urlencode(params))
 	f = urlopen(url)
 	soup = BeautifulStoneSoup(f.read(), convertEntities=BeautifulStoneSoup.XML_ENTITIES)
@@ -107,6 +107,7 @@ def get_similar_tracks(artist, title):
 						__playlisttracks__.append({'artist': trackartist, 'title': tracktitle, 'file': song['file'], 'added': False})
 						count = count + 1
 						pDialog.update(85, __settings__.get_string(3004) % ('%s - %s' % (trackartist, tracktitle)) , __settings__.get_string(3001) % count)
+						break
 	return count
 
 tag = xbmc.Player().getMusicInfoTag()
@@ -130,7 +131,7 @@ if xbmc.Player().isPlayingAudio():
 			previous_artist = __playlisttracks__[i]['artist']
 			listitem = xbmcgui.ListItem(__playlisttracks__[i]['title'])
 			xbmc.PlayList(0).add(__playlisttracks__[i]['file'], listitem)
-			__playlisttracks__[i]["added"] = True
+			__playlisttracks__[i]['added'] = True
 			index = index + 1
 	pDialog.close()
 	if count == 0:
