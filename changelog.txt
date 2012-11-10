@@ -1,3 +1,7 @@
+*** 1.0.0 ***
+Updated version number to 1.0.0.
+Set extension point to script rather than lyric.
+
 *** 0.3.0 ***
 Left debugging statement in code.
 

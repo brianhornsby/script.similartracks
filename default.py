@@ -1,6 +1,6 @@
 #/*
 # *
-# * Similar Tracks: SimilarTracks add-on for XBMC.
+# * SimilarTracks add-on for XBMC.
 # *
 # * Copyright (C) 2012 Brian Hornsby
 # *	
