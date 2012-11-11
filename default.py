@@ -89,12 +89,12 @@ def get_similar_tracks(artist, title):
 			artists.append({'artist': artist['artist'], 'id': artist['artistid']})
 	
 	for track in lastfmtracks:
-		tracktitle = track['title'].encode('utf-8')
-		trackartist = track['artist'].encode('utf-8')
+		tracktitle = track['title'].encode('ascii', 'ignore')
+		trackartist = track['artist'].encode('ascii', 'ignore')
 		no = no + 1
 		artistid = None
 		for artist in artists:
-			if artist.has_key('artist') and artist['artist'] == trackartist:
+			if artist.has_key('artist') and artist['artist'].encode('ascii', 'ignore') == trackartist:
 				artistid = artist['id']
 				break
 		if artistid:
@@ -115,7 +115,7 @@ if xbmc.Player().isPlayingAudio():
 	playlist = xbmc.PlayList(0)
 	currenttrackpos = playlist.getposition()
 	currenttrack = playlist[currenttrackpos].getfilename()
-	pDialog.update(25, __settings__.get_string(3005) % (tag.getArtist(), tag.getTitle()))
+	pDialog.update(25, __settings__.get_string(3005) % (tag.getArtist().decode('utf-8', 'ignore'), tag.getTitle().decode('utf-8', 'ignore')))
 	count = get_similar_tracks(tag.getArtist(), tag.getTitle())
 	if count > 0:
 		trackpos = currenttrackpos + 1
