@@ -23,7 +23,9 @@ import os, sys, urllib
 import xbmc, xbmcgui, xbmcplugin
 from urllib2 import urlopen
 from BeautifulSoup import BeautifulStoneSoup
+
 import resources.lib.xbmcsettings as xbmcsettings
+import resources.lib.xbmcutils as utils
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -33,11 +35,18 @@ else:
 __addonid__  = 'script.similartracks'
 __settings__ = xbmcsettings.Settings(__addonid__, sys.argv)
 
-pDialog = xbmcgui.DialogProgress()
-pDialog.create(__settings__.get_string(1000), __settings__.get_string(3000))
-
 __maxcount__ = __settings__['maxcount']
+__mincount__ = __settings__['mincount']
+__runinbackground__ = (__settings__['background'] == 'true')
 __playlisttracks__ = []
+
+if not __runinbackground__:
+	pDialog = xbmcgui.DialogProgress()
+	pDialog.create(__settings__.get_string(1000), __settings__.get_string(3000))
+
+def display_notification(header, message):
+	image = __settings__.get_path('icon.png')
+	utils.notification(header, message, image=image)
 
 def get_next_track_to_add(prev_artist):
 	index = 0
@@ -75,7 +84,11 @@ def get_lastfm_similar_tracks(artist, track):
 
 def get_similar_tracks(artist, title):
 	lastfmtracks = get_lastfm_similar_tracks(artist, title)
-	pDialog.update(75, __settings__.get_string(3002), __settings__.get_string(3003) % (len(lastfmtracks)))
+	message = (__settings__.get_string(3003) % (len(lastfmtracks)))
+	if __runinbackground__:
+		display_notification(__settings__.get_string(1000), message)
+	else:
+		pDialog.update(75, __settings__.get_string(3002), message)
 	count = 0
 	no = 1
 	
@@ -106,7 +119,8 @@ def get_similar_tracks(artist, title):
 					if song.has_key('title') and song['title'] == tracktitle:
 						__playlisttracks__.append({'artist': trackartist, 'title': tracktitle, 'file': song['file'], 'added': False})
 						count = count + 1
-						pDialog.update(85, __settings__.get_string(3004) % ('%s - %s' % (trackartist, tracktitle)) , __settings__.get_string(3001) % count)
+						if not __runinbackground__:
+							pDialog.update(85, __settings__.get_string(3004) % ('%s - %s' % (trackartist, tracktitle)) , __settings__.get_string(3001) % count)
 						break
 	return count
 
@@ -115,16 +129,19 @@ if xbmc.Player().isPlayingAudio():
 	playlist = xbmc.PlayList(0)
 	currenttrackpos = playlist.getposition()
 	currenttrack = playlist[currenttrackpos].getfilename()
-	pDialog.update(25, __settings__.get_string(3005) % (tag.getArtist().decode('utf-8', 'ignore'), tag.getTitle().decode('utf-8', 'ignore')))
+	message = (__settings__.get_string(3005) % (tag.getArtist().decode('utf-8', 'ignore'), tag.getTitle().decode('utf-8', 'ignore')))
+	if __runinbackground__:
+		display_notification(__settings__.get_string(1000), message)
+	else:
+		pDialog.update(25, message)
 	count = get_similar_tracks(tag.getArtist(), tag.getTitle())
 	if count > 0:
 		trackpos = currenttrackpos + 1
 		while xbmc.PlayList(0).size() > trackpos:
 			xbmc.PlayList(0).remove(xbmc.PlayList(0)[trackpos].getfilename())
 		index = 0
-		playlist_len = len(__playlisttracks__)
 		previous_artist = tag.getArtist()
-		while index < playlist_len:
+		while index < __maxcount__:
 			i = get_next_track_to_add(previous_artist)
 			if i == -1:
 				break
@@ -133,7 +150,12 @@ if xbmc.Player().isPlayingAudio():
 			xbmc.PlayList(0).add(__playlisttracks__[i]['file'], listitem)
 			__playlisttracks__[i]['added'] = True
 			index = index + 1
-	pDialog.close()
-	if count == 0:
+	if not __runinbackground__:
+		pDialog.close()
+
+	message = (__settings__.get_string(3006) % (index, tag.getArtist().decode('utf-8', 'ignore'), tag.getTitle().decode('utf-8', 'ignore')))
+	if __runinbackground__:
+		display_notification(__settings__.get_string(1000), message)
+	else:
 		dialog = xbmcgui.Dialog()
-		ok = dialog.ok(__settings__.get_string(1000), __settings__.get_string(3006), '%s - %s' % (tag.getArtist(), tag.getTitle()))
+		ok = dialog.ok(__settings__.get_string(1000), message)

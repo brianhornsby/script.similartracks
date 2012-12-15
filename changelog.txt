@@ -1,3 +1,7 @@
+*** 1.1.0 ***
+Added 'run in background' setting.
+Fixed 'maximum count' setting.
+
 *** 1.0.1 ***
 Fixed 'UnicodeDecodeError' exception.
 
