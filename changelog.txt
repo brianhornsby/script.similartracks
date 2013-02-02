@@ -1,3 +1,10 @@
+*** 1.1.2 ***
+Updated JSON calls to work with Frodo.
+
+*** 1.1.1 ***
+Updated code to pep8 coding style.
+Fixed script error if Last.fm returned zero records.
+
 *** 1.1.0 ***
 Added 'run in background' setting.
 Fixed 'maximum count' setting.
