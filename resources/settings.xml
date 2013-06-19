@@ -2,7 +2,7 @@
 <settings>
 	<category label="Setup">
 		<setting id="maxcount" label="2000" type="number" default="25"/>
-		<setting id="mincount" label="2001" type="number" default="0"/>
-		<setting id="background" type ="bool" label="2002" default="false"/>
+		<setting id="recursive" label="2001" type="bool" default="false"/>
+		<setting id="background" label="2002" type ="bool" default="false"/>
 	</category>
 </settings>
