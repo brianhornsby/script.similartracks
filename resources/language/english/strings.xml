@@ -4,9 +4,11 @@
 	<string id="1000">Similar Tracks</string>
 	
 	<!--Settings-->
-	<string id="2000">Maximum tracks to add to playlist</string>
-	<string id="2001">Recursive</string>
+	<string id="2000">Similar Tracks</string>
+	<string id="2001">Maximum tracks to add to playlist</string>
 	<string id="2002">Run in background</string>
+	<string id="2010">Advanced</string>
+	<string id="2011">Debug</string>
 	
 	<!--Dialogs-->,
 	<string id="3000">Initializing script</string>
@@ -14,10 +16,13 @@
 	<string id="3002">Creating playlist</string>
 	<string id="3003">Received %d similar tracks from last.fm</string>
 	<string id="3004">Creating playlist. Adding %s</string>
-	<string id="3005">Getting similar tracks for %s - %s</string>
-	<string id="3006">Added %d similar tracks for %s - %s</string>
+	<string id="3005">Getting similar tracks for</string>
+	<string id="3006">Added %d similar tracks for</string>
+	<string id="3007">There was a problem connecting to Last.fm</string>
+	<string id="3008">Nothing is currently playing</string>
 
 	<!--Notifcations-->
-	<string id="4000"></string>
+	<string id="4000">Getting similar tracks for %s - %s</string>
+	<string id="4001">Added %d similar tracks for %s - %s</string>
 	
 </strings>

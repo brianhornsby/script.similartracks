@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<category label="Setup">
-		<setting id="maxcount" label="2000" type="number" default="25"/>
-		<setting id="recursive" label="2001" type="bool" default="false"/>
+	<category label="2000">
+		<setting id="maxcount" label="2001" type="number" default="25"/>
 		<setting id="background" label="2002" type ="bool" default="false"/>
+	</category>
+	<category label="2010">
+		<setting id="debug" type="bool" label="2011" default="false"/>
 	</category>
 </settings>
