@@ -25,7 +25,7 @@ import sys
 import urllib
 import xbmc
 import xbmcgui
-from urllib2 import urlopen
+from urllib2 import urlopen, URLError
 
 import resources.lib.xbmcsettings as xbmcsettings
 import resources.lib.xbmcutils as utils
@@ -109,6 +109,9 @@ def get_similar_tracks(artist, title):
     else:
         pDialog.update(75, _settings.get_string(3002), message)
     log_debug('Last.fm returned %d similar tracks' % (len(lastfmtracks)))
+
+    if pDialog.iscanceled():
+        return (0, [])
 
     json_query = xbmc.executeJSONRPC(
         '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": [], "sort": { "method": "label" } }, "id": 1}')
@@ -198,20 +201,23 @@ if xbmc.Player().isPlayingAudio():
         count, playlisttracks = get_similar_tracks(artist, title)
         log_debug('Found %d similar tracks in XBMC library' % count)
 
-        index = 0
-        if count > 0:
-            while xbmc.PlayList(0).size() > currenttrackpos:
-                xbmc.PlayList(0).remove(xbmc.PlayList(0)[currenttrackpos].getfilename())
-            index = add_tracks_to_playlist(artist, playlisttracks)
+        if not pDialog.iscanceled():
+            index = 0
+            if count > 0:
+                while xbmc.PlayList(0).size() > currenttrackpos:
+                    xbmc.PlayList(0).remove(xbmc.PlayList(0)[currenttrackpos].getfilename())
+                index = add_tracks_to_playlist(artist, playlisttracks)
 
-        if not _runinbackground:
-            pDialog.close()
+            if not _runinbackground:
+                pDialog.close()
 
-        log_debug('Added %d songs to playlist' % index)
-        if _runinbackground:
-            display_notification(_settings.get_string(1000), _settings.get_string(4001) % (index, artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+            log_debug('Added %d songs to playlist' % index)
+            if _runinbackground:
+                display_notification(_settings.get_string(1000), _settings.get_string(4001) % (index, artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+            else:
+                utils.ok(_settings.get_string(1000), _settings.get_string(3006) % index, '%s - %s' % (artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
         else:
-            utils.ok(_settings.get_string(1000), _settings.get_string(3006) % index, '%s - %s' % (artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+            log_debug('Script was cancelled')
     else:
         log_debug('Unable to get currently playing track')
 else:
