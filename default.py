@@ -110,7 +110,7 @@ def get_similar_tracks(artist, title):
         pDialog.update(75, _settings.get_string(3002), message)
     log_debug('Last.fm returned %d similar tracks' % (len(lastfmtracks)))
 
-    if pDialog.iscanceled():
+    if not _runinbackground and pDialog.iscanceled():
         return (0, [])
 
     json_query = xbmc.executeJSONRPC(
@@ -201,7 +201,7 @@ if xbmc.Player().isPlayingAudio():
         count, playlisttracks = get_similar_tracks(artist, title)
         log_debug('Found %d similar tracks in XBMC library' % count)
 
-        if not pDialog.iscanceled():
+        if _runinbackground or not pDialog.iscanceled():
             index = 0
             if count > 0:
                 while xbmc.PlayList(0).size() > currenttrackpos:
