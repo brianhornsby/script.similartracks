@@ -3,8 +3,9 @@
 	<category label="2000">
 		<setting id="maxcount" label="2001" type="number" default="25"/>
 		<setting id="background" label="2002" type ="bool" default="false"/>
+		<setting id="order" label="2003" type="enum" lvalues="2004|2005" default="2004"/>
 	</category>
 	<category label="2010">
-		<setting id="debug" type="bool" label="2011" default="false"/>
+		<setting id="debug" label="2011" type="bool" default="false"/>
 	</category>
 </settings>

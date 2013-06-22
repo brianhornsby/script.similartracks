@@ -20,6 +20,7 @@
 # *
 # */
 
+import random
 import sys
 import urllib
 import xbmc
@@ -44,6 +45,7 @@ _maxcount = _settings['maxcount']
 if not _maxcount:
     _maxcount = -1
 _runinbackground = (_settings['background'] == 'true')
+_order = int(_settings['order'])
 
 
 def log_debug(msg):
@@ -60,6 +62,7 @@ log_debug('Version:    [%s]' % (_version))
 
 log_debug('maxcount: %d' % _maxcount)
 log_debug('runinbackground: %d' % _runinbackground)
+log_debug('order: %d' % _order)
 
 if not _runinbackground:
     pDialog = xbmcgui.DialogProgress()
@@ -137,7 +140,7 @@ def get_similar_tracks(artist, title):
                 for song in json_response['result']['songs']:
                     if 'title' in song and song['title'] == tracktitle:
                         playlisttracks.append({'songid': song[
-                                               'songid'], 'artist': song['artist'], 'title': song['title'], 'added': False})
+                                               'songid'], 'artist': song['artist'], 'title': song['title']})
                         count = count + 1
                         if not _runinbackground:
                             pDialog.update(85, _settings.get_string(3004) % ('%s - %s' % (
@@ -148,17 +151,18 @@ def get_similar_tracks(artist, title):
 
 
 def get_next_track_to_add(previous_artist, playlisttracks):
-    index = 0
-    for track in playlisttracks:
-        if track['artist'][0] != previous_artist:
-            if track['added'] is False:
+    if len(playlisttracks) == 0:
+        return -1
+
+    if _order == 0:
+        return random.randrange(len(playlisttracks))
+    elif _order == 2:
+        for track in playlisttracks:
+            if track['artist'][0] != previous_artist:
                 return index
-        index = index + 1
-    index = 0
-    for track in playlisttracks:
-        if track['added'] is False:
-            return index
-        index = index + 1
+            index = index + 1
+    if len(playlisttracks) > 0:
+        return 0
     return -1
 
 
@@ -174,9 +178,9 @@ def add_tracks_to_playlist(artist, playlisttracks):
             '{ "jsonrpc": "2.0", "method": "Playlist.Add", "params": { "playlistid": 0, "item": { "songid": %d } }, "id": 1 }' % playlisttracks[i]['songid'])
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        playlisttracks[i]['added'] = True
+        playlisttracks.pop(i)
         index = index + 1
-    return (index, playlisttracks)
+    return index
 
 
 if xbmc.Player().isPlayingAudio():
@@ -198,7 +202,7 @@ if xbmc.Player().isPlayingAudio():
         if count > 0:
             while xbmc.PlayList(0).size() > currenttrackpos:
                 xbmc.PlayList(0).remove(xbmc.PlayList(0)[currenttrackpos].getfilename())
-            index, playlisttracks = add_tracks_to_playlist(artist, playlisttracks)
+            index = add_tracks_to_playlist(artist, playlisttracks)
 
         if not _runinbackground:
             pDialog.close()

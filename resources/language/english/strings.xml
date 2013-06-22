@@ -7,6 +7,9 @@
 	<string id="2000">Similar Tracks</string>
 	<string id="2001">Maximum tracks to add to playlist</string>
 	<string id="2002">Run in background</string>
+	<string id="2003">Playlist order</string>
+	<string id="2004">Random</string>
+	<string id="2005">Last.fm</string>
 	<string id="2010">Advanced</string>
 	<string id="2011">Debug</string>
 	
