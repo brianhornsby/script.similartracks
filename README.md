@@ -13,11 +13,11 @@ Features
 Screenshots
 ----------
 
-<img alt="Get similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_get_dialog.png" height="128"/>
-<img alt="Found similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_found_dialog.png" height="128"/>
-<img alt="Added tracks to playlist progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_added_dialog.png" height="128"/>
-<img alt="Get similar tracks notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_get_notification.png" height="128"/>
-<img alt="Added tracks to playlist notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_added_notification.png" height="128"/>
+<img alt="Get similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/similartracks_get_dialog.png" height="128"/>
+<img alt="Found similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/similartracks_found_dialog.png" height="128"/>
+<img alt="Added tracks to playlist progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/similartracks_added_dialog.png" height="128"/>
+<img alt="Get similar tracks notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/similartracks_get_notification.png" height="128"/>
+<img alt="Added tracks to playlist notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/similartracks_added_notification.png" height="128"/>
 
 Installation
 -----------
