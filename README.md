@@ -1,35 +1,45 @@
-Similar Tracks Add-on for XBMC
-======================
+SimilarTracks for XBMC
+===========
 
-About
+A script that uses the currently playing track to generate a playlist of similar tracks in your XBMC music library.
+
+Features
+--------
+- Create a playlist of tracks from your music library that are similar to the currently playing track.
+- Uses Last.fm getSimilar API to find similar tracks.
+- Runs in background.
+- Can specify the maximum number of tracks to add to the playlist.
+
+Screenshots
+----------
+
+<img alt="Get similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_get_dialog.png" height="128"/>
+<img alt="Found similar tracks progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_found_dialog.png" height="128"/>
+<img alt="Added tracks to playlist progress dialog" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_added_dialog.png" height="128"/>
+<img alt="Get similar tracks notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_get_notification.png" height="128"/>
+<img alt="Added tracks to playlist notification" src="https://raw.github.com/brianhornsby/www_brianhornsby_com/master/img/script_similartracks_added_notification.png" height="128"/>
+
+Installation
+-----------
+Download the latest zip file and install the addon. See http://wiki.xbmc.org/?title=Add-ons#How_to_install_from_a_ZIP_file for more details on installing addons from zip file.
+
+Usage
 -----
-This add-on creates a playlist, based on tracks from your XBMC music library, that are similar to the currently playing track.
-Uses the [last.fm getSimilar api][1] call to get tracks. 
-The add-on type is set to lyrics, so that it can be called from the music OSD. 
+The SimilarTracks script can be accessed from the Programs menu or called using the RunScript builtin function (RunScript(script.similartracks))
 
-See [wiki][3] for more information on using add-on.
+Settings
+--------
+The following settings are available.
 
-Prerequisites
------
-- Ubuntu 12.04 (Precise Penguin) or Mac OS X (Lion)
-- XBMC 12.0 (Frodo)
+**Maximum tracks to add to playlist**: The maximum tracks that will be added to the playlist. Default: 25
 
-Installation Instructions
------
-1. Download the latest zip file for add-on from [Download][4] section.
+**Run in background**: Script runs in the background. Default: false
 
-2. Install add-on into XBMC using 'install from zip file' option. The add-on will be installed in the programs add-ons section.
-
-Third-party Libraries
----------------------
-- BeautifulSoup
-- SimpleJSON
+**Playlist order**: The order that tracks should be added to the playlist. Random: Tracks are added at random. Last.FM: Tracks are added in the order they came back from Last.fm. Default: Random
 
 License
 -------
-This software is released under the [GPL 3.0 license] [2].
+SimilarTracks for XBMC is licensed under the [GPL 3.0 license] [1].
 
-[1]: http://www.last.fm/api/show/track.getSimilar
-[2]: http://www.gnu.org/licenses/gpl-3.0.html
-[3]: https://github.com/brianhornsby/similartracks-xbmc/wiki
-[4]: https://github.com/brianhornsby/similartracks-xbmc/downloads
+
+[1]: http://www.gnu.org/licenses/gpl-3.0.html
