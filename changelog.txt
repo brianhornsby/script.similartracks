@@ -1,3 +1,9 @@
+*** 2.0.1 ***
+Fix for issue #1 where unicode character was causing script to raise an exception.
+
+*** 2.0.0 ***
+Complete rewrite of code.
+
 *** 1.1.2 ***
 Updated JSON calls to work with Frodo.
 
