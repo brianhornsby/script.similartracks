@@ -90,7 +90,7 @@ def get_lastfm_similar_tracks(artist, track):
         utils.ok(_settings.get_string(1000), _settings.get_string(3007))
         return []
 
-    json_query = unicode(f.read(), 'utf-8', errors='ignore')
+    json_query = unicode(f.read(), 'ascii', errors='ignore')
     f.close()
     json_response = simplejson.loads(json_query)
     lastfmtracks = []
@@ -115,7 +115,7 @@ def get_similar_tracks(artist, title):
 
     json_query = xbmc.executeJSONRPC(
         '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": [], "sort": { "method": "label" } }, "id": 1}')
-    json_query = unicode(json_query, 'utf-8', errors='ignore')
+    json_query = unicode(json_query, 'ascii', errors='ignore')
     json_response = simplejson.loads(json_query)
 
     artists = []
@@ -137,7 +137,7 @@ def get_similar_tracks(artist, title):
         if artistid:
             json_query = xbmc.executeJSONRPC(
                 '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist"], "sort": { "method": "label" },  "filter": {"artistid": %s} }, "id": 1}' % artistid)
-            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            json_query = unicode(json_query, 'ascii', errors='ignore')
             json_response = simplejson.loads(json_query)
             if (json_response['result'] is not None) and ('songs' in json_response['result']):
                 for song in json_response['result']['songs']:
@@ -179,7 +179,7 @@ def add_tracks_to_playlist(artist, playlisttracks):
         previous_artist = playlisttracks[i]['artist']
         json_query = xbmc.executeJSONRPC(
             '{ "jsonrpc": "2.0", "method": "Playlist.Add", "params": { "playlistid": 0, "item": { "songid": %d } }, "id": 1 }' % playlisttracks[i]['songid'])
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_query = unicode(json_query, 'ascii', errors='ignore')
         json_response = simplejson.loads(json_query)
         playlisttracks.pop(i)
         index = index + 1
@@ -194,9 +194,9 @@ if xbmc.Player().isPlayingAudio():
     currenttrackpos = playlist.getposition() + 1
     if currenttrackpos <= len(playlist):
         if _runinbackground:
-            display_notification(_settings.get_string(1000), _settings.get_string(4000) % (artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+            display_notification(_settings.get_string(1000), _settings.get_string(4000) % (artist.decode('ascii', 'ignore'), title.decode('ascii', 'ignore')))
         else:
-            pDialog.update(25, _settings.get_string(3005), '%s - %s' % (artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+            pDialog.update(25, _settings.get_string(3005), '%s - %s' % (artist.decode('ascii', 'ignore'), title.decode('ascii', 'ignore')))
 
         count, playlisttracks = get_similar_tracks(artist, title)
         log_debug('Found %d similar tracks in XBMC library' % count)
@@ -213,9 +213,9 @@ if xbmc.Player().isPlayingAudio():
 
             log_debug('Added %d songs to playlist' % index)
             if _runinbackground:
-                display_notification(_settings.get_string(1000), _settings.get_string(4001) % (index, artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+                display_notification(_settings.get_string(1000), _settings.get_string(4001) % (index, artist.decode('ascii', 'ignore'), title.decode('ascii', 'ignore')))
             else:
-                utils.ok(_settings.get_string(1000), _settings.get_string(3006) % index, '%s - %s' % (artist.decode('utf-8', 'ignore'), title.decode('utf-8', 'ignore')))
+                utils.ok(_settings.get_string(1000), _settings.get_string(3006) % index, '%s - %s' % (artist.decode('ascii', 'ignore'), title.decode('ascii', 'ignore')))
         else:
             log_debug('Script was cancelled')
     else:
