@@ -1,9 +1,9 @@
 
 #/*
 # *
-# * SimilarTracks for XBMC.
+# * SimilarTracks for Kodi.
 # *
-# * Copyright (C) 2013 Brian Hornsby
+# * Copyright (C) 2015 Brian Hornsby
 # *
 # * This program is free software: you can redistribute it and/or modify
 # * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ import xbmc
 import xbmcgui
 from urllib2 import urlopen, URLError
 
-import resources.lib.xbmcsettings as xbmcsettings
-import resources.lib.xbmcutils as utils
+import resources.lib.kodisettings as kodisettings
+import resources.lib.kodiutils as utils
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -36,7 +36,7 @@ else:
     import json as simplejson
 
 _addonid = 'script.similartracks'
-_settings = xbmcsettings.XBMCSettings(_addonid, sys.argv)
+_settings = kodisettings.KodiSettings(_addonid, sys.argv)
 
 # Get addon information and settings.
 _addonname = _settings.get_name()
@@ -199,7 +199,7 @@ if xbmc.Player().isPlayingAudio():
             pDialog.update(25, _settings.get_string(3005), '%s - %s' % (artist.decode('ascii', 'ignore'), title.decode('ascii', 'ignore')))
 
         count, playlisttracks = get_similar_tracks(artist, title)
-        log_debug('Found %d similar tracks in XBMC library' % count)
+        log_debug('Found %d similar tracks in Kodi library' % count)
 
         if _runinbackground or not pDialog.iscanceled():
             index = 0

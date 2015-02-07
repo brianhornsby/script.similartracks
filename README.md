@@ -1,7 +1,7 @@
-SimilarTracks for XBMC
+SimilarTracks for Kodi
 ===========
 
-A script that uses the currently playing track to generate a playlist of similar tracks in your XBMC music library.
+A script that uses the currently playing track to generate a playlist of similar tracks in your Kodi music library.
 
 Features
 --------
@@ -21,7 +21,7 @@ Screenshots
 
 Installation
 -----------
-Download the latest zip file and install the addon. See http://wiki.xbmc.org/?title=Add-ons#How_to_install_from_a_ZIP_file for more details on installing addons from zip file.
+Download the latest zip file and install the addon. See http://kodi.wiki/view/HOW-TO:Install_an_Add-on_from_a_zip_file for more details on installing addons from zip file.
 
 Usage
 -----
@@ -39,7 +39,7 @@ The following settings are available.
 
 License
 -------
-SimilarTracks for XBMC is licensed under the [GPL 3.0 license] [1].
+SimilarTracks for Kodi is licensed under the [GPL 3.0 license] [1].
 
 
 [1]: http://www.gnu.org/licenses/gpl-3.0.html
