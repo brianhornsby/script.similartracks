@@ -1,3 +1,6 @@
+*** 3.0.0 ***
+Updated plugin to use Kodi name. Updated copyright date. [d9ac0ea]
+
 *** 2.0.1 ***
 Fix for issue #1 where unicode character was causing script to raise an exception.
 
