@@ -131,9 +131,10 @@ def get_similar_tracks(artist, title):
         trackartist = track['artist'].encode('ascii', 'ignore')
         artistid = None
         for artist in artists:
-            if 'artist' in artist and artist['artist'].encode('ascii', 'ignore') == trackartist:
-                artistid = artist['id']
-                break
+            if isinstance(artist['artist'], str) or isinstance(artist['artist'], unicode):
+                if 'artist' in artist and artist['artist'].encode('ascii', 'ignore') == trackartist:
+                    artistid = artist['id']
+                    break
         if artistid:
             json_query = xbmc.executeJSONRPC(
                 '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "artist"], "sort": { "method": "label" },  "filter": {"artistid": %s} }, "id": 1}' % artistid)
