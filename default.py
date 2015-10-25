@@ -94,9 +94,10 @@ def get_lastfm_similar_tracks(artist, track):
     f.close()
     json_response = simplejson.loads(json_query)
     lastfmtracks = []
-    for track in json_response['similartracks']['track']:
-        lastfmtracks.append({'title': track[
-                            'name'], 'artist': track['artist']['name']})
+    if 'similartracks' in json_response:
+        for track in json_response['similartracks']['track']:
+            lastfmtracks.append({'title': track[
+                                'name'], 'artist': track['artist']['name']})
     return lastfmtracks
 
 
