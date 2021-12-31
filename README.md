@@ -1,3 +1,6 @@
+This repository has been set to archived (read-only) as I no longer use Kodi, so development of this plugin has stopped.
+==========
+
 SimilarTracks for Kodi
 ===========
 
